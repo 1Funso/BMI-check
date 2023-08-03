@@ -11,13 +11,12 @@ the data by gender, age, or weight category.
 import gspread
 from google.oauth2.service_account import Credentials
 
-
 # Google Sheets authentication
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
-    ]
+]
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
@@ -48,4 +47,28 @@ def get_user_data():
             break
 
     return user_data
-    
+
+def validate_input(data):
+    """
+    Validate the input data. The age should be a positive integer, the gender
+    should be either 'Male' or 'Female', and the height and weight should be
+    positive numbers. If the data is valid, the function returns True;
+    otherwise, it prints an error message and returns False.
+    """
+    try:
+        age = int(data[0])
+        gender = data[1]
+        height = float(data[2])
+        weight = float(data[3])
+
+        if age <= 0:
+            raise ValueError("Age must be a positive number.")
+        if gender not in ['Male', 'Female']:
+            raise ValueError("Gender must be 'Male' or 'Female'.")
+        if height <= 0 or weight <= 0:
+            raise ValueError("Height and weight must be positive numbers.")
+    except ValueError as e:
+        print(f"Invalid input: {e}")
+        return False
+
+    return True
