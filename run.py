@@ -112,6 +112,9 @@ def calculate_bmi_and_update_sheet(data):
     # Use format() to control number of decimal places
     obesity.append_row([str(id), str(age), gender, format(height, '.0f'), format(weight, '.0f'), format(bmi, '.1f'), category])
 
+    return bmi  # return the calculated bmi
+
+    
 def compare_with_median(user_bmi):
     """
     Compare the user's BMI with the median BMI in the Google Sheet. The function
@@ -122,12 +125,23 @@ def compare_with_median(user_bmi):
     # Get the BMI data from the sheet
     data = obesity.get_all_values()
     df = pd.DataFrame(data[1:], columns=data[0])
-    df['BMI'] = df['BMI'].astype(float)
+    df['BMI'] = pd.to_numeric(df['BMI'], errors='coerce')
 
-    # Calculate the median BMI
-    median_bmi = df['BMI'].median()
+    # Check if 'BMI' column is not empty and contains at least one non-NaN value
+    if df['BMI'].count() > 0:
+
+        # Calculate the median BMI
+        median_bmi = df['BMI'].median()
     
-
+        # Compare the user's BMI with the median and print a message
+        if user_bmi > median_bmi:
+            print(f"Your BMI is above the median BMI of {median_bmi}.")
+        elif user_bmi < median_bmi:
+            print(f"Your BMI is below the median BMI of {median_bmi}.")
+        else:
+            print(f"Your BMI is equal to the median BMI of {median_bmi}.")
+    else:
+        print("Unable to calculate median BMI because there is no BMI data.")
 
 def main():
     user_data = get_user_data()
