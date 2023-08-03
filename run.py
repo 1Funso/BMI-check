@@ -23,6 +23,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('Obesity')
 
+
 # Open 'Obesity' worksheet
 obesity = SHEET.worksheet('Obesity')
 
@@ -88,8 +89,7 @@ def calculate_bmi_and_update_sheet(data):
 
     # Calculate BMI
     bmi = weight / ((height / 100) ** 2)
-    print(f"Calculated BMI: {bmi}")
-    
+          
     # Determine weight category
     if bmi < 18.5:
         category = 'Underweight'
@@ -99,11 +99,16 @@ def calculate_bmi_and_update_sheet(data):
         category = 'Overweight'
     else:
         category = 'Obese'
-    print(f"Weight Category: {category}")
+   
 
+    # Get the ID for the new row
+    # Fetch all data from the worksheet
+    worksheet_data = obesity.get_all_values() 
+    id = len(worksheet_data) + 1
 
-
-
+    # Append to Google Sheet with all values as strings
+    # Use format() to control number of decimal places
+    obesity.append_row([str(id), str(age), gender, format(height, '.0f'), format(weight, '.0f'), format(bmi, '.1f'), category])
 
 def main():
     user_data = get_user_data()
