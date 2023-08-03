@@ -39,7 +39,7 @@ def get_user_data():
 
         data_str = input("Enter your data here: ")
 
-        user_data = data_str.split(",")
+        user_data = [item.strip() for item in data_str.split(",")]
 
         # Validate user data
         if validate_input(user_data):
@@ -72,3 +72,40 @@ def validate_input(data):
         return False
 
     return True
+
+def calculate_bmi_and_update_sheet(data):
+    """
+    Calculate BMI and update the Google Sheet with the new data. The function
+    calculates the BMI based on the height and weight, determines the weight
+    category based on the BMI, and appends a new row to the Google Sheet with
+    the age, gender, height, weight, BMI, and weight category. Finally, it
+    compares the user's BMI with the median BMI in the Google Sheet.
+    """
+    age = int(data[0])
+    gender = data[1]
+    height = float(data[2])
+    weight = float(data[3])
+
+    # Calculate BMI
+    bmi = weight / ((height / 100) ** 2)
+    
+    # Determine weight category
+    if bmi < 18.5:
+        category = 'Underweight'
+    elif bmi < 24.9:
+        category = 'Normal weight'
+    elif bmi < 29.9:
+        category = 'Overweight'
+    else:
+        category = 'Obese'
+
+
+
+
+
+
+def main():
+    user_data = get_user_data()
+    calculate_bmi_and_update_sheet(user_data)
+
+main()
