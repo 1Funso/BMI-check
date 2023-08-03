@@ -10,6 +10,8 @@ the data by gender, age, or weight category.
 
 import gspread
 from google.oauth2.service_account import Credentials
+import pandas as pd
+import numpy as np
 
 # Google Sheets authentication
 SCOPE = [
@@ -99,7 +101,7 @@ def calculate_bmi_and_update_sheet(data):
         category = 'Overweight'
     else:
         category = 'Obese'
-   
+ 
 
     # Get the ID for the new row
     # Fetch all data from the worksheet
@@ -110,8 +112,26 @@ def calculate_bmi_and_update_sheet(data):
     # Use format() to control number of decimal places
     obesity.append_row([str(id), str(age), gender, format(height, '.0f'), format(weight, '.0f'), format(bmi, '.1f'), category])
 
+def compare_with_median(user_bmi):
+    """
+    Compare the user's BMI with the median BMI in the Google Sheet. The function
+    retrieves the BMI data from the sheet, calculates the median BMI, and prints
+    a message indicating whether the user's BMI is below, above, or equal to the
+    median.
+    """
+    # Get the BMI data from the sheet
+    data = obesity.get_all_values()
+    df = pd.DataFrame(data[1:], columns=data[0])
+    df['BMI'] = df['BMI'].astype(float)
+
+    # Calculate the median BMI
+    median_bmi = df['BMI'].median()
+    
+
+
 def main():
     user_data = get_user_data()
-    calculate_bmi_and_update_sheet(user_data)
+    user_bmi = calculate_bmi_and_update_sheet(user_data)
+    compare_with_median(user_bmi)
 
 main()
