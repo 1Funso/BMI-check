@@ -88,6 +88,7 @@ def calculate_bmi_and_update_sheet(data):
 
     # Calculate BMI
     bmi = weight / ((height / 100) ** 2)
+    print(f"Calculated BMI: {bmi}")
     
     # Determine weight category
     if bmi < 18.5:
@@ -98,7 +99,7 @@ def calculate_bmi_and_update_sheet(data):
         category = 'Overweight'
     else:
         category = 'Obese'
-
+    print(f"Weight Category: {category}")
 
 
 
