@@ -36,6 +36,7 @@ def get_user_data():
     continues to prompt the user until valid data is entered.
     """
     while True:
+        print("******************************************************")
         print("\nPlease enter your age, gender, height, and weight.\n")
         print("Data should be four values, separated by commas.\n")
         print("Example: 25, Male, 180, 80\n")
@@ -46,7 +47,7 @@ def get_user_data():
 
         # Validate user data
         if validate_input(user_data):
-            print("\nData is valid! ")
+            print("\nData is valid!\n ")
             break
 
     return user_data
@@ -112,10 +113,10 @@ def calculate_bmi_and_update_sheet(data):
     # Use format() to control number of decimal places
     obesity.append_row([str(id), str(age), gender, format(height, '.0f'), format(weight, '.0f'), format(bmi, '.1f'), category])
 
-    return bmi  # return the calculated bmi
+    return bmi, category
 
     
-def compare_with_median(user_bmi):
+def compare_with_median(user_bmi, category):
     """
     Compare the user's BMI with the median BMI in the Google Sheet. The function
     retrieves the BMI data from the sheet, calculates the median BMI, and prints
@@ -133,18 +134,24 @@ def compare_with_median(user_bmi):
         # Calculate the median BMI
         median_bmi = df['BMI'].median()
 
-        # Print the user's BMI
-        print(f"Your calculated BMI is {user_bmi:.1f}.\n")
+        # Print the user's BMI and their category
+        print("******************************************************************************")
+        print(f"\nYour calculated BMI is {user_bmi:.1f}. You are categorized as {category}.\n")
+        print("*******************************************************************************")
     
-        # Compare the user's BMI with the median and print a message
+       # Compare the user's BMI with the median and print a message
+        print("*******************************************************************************")
         if user_bmi > median_bmi:
-            print(f"Your BMI is above the median BMI of {median_bmi}.\n")
+            print(f"\nYour BMI of {user_bmi:.1f} is above the median BMI of the sampled population.\n")
         elif user_bmi < median_bmi:
-            print(f"Your BMI is below the median BMI of {median_bmi}.\n")
+            print(f"\nYour BMI of {user_bmi:.1f} is below the median BMI of the sampled population.\n")
         else:
-            print(f"Your BMI is equal to the median BMI of {median_bmi}.\n")
+            print(f"\nYour BMI of {user_bmi:.1f} is equal to the median BMI of the sampled population.\n")
+        print("**********************************************************************************")
     else:
-        print("Unable to calculate median BMI because there is no BMI data.\n")
+            print("**************************************************************")
+            print("Unable to calculate median BMI because there is no BMI data.\n")
+            print("**************************************************************")
 
 def explore_data():
     """
@@ -182,19 +189,19 @@ def print_descriptive_statistics(df):
     median_bmi = df['BMI'].median()
 
     
-    print("Here are some descriptive statistics of the data:")
-    print(f"Number of entries: {count:.0f}")
-    print(f"Median age: {median_age:.0f}")
-    print(f"Median height: {median_height:.0f}")
-    print(f"Median weight: {median_weight:.0f}")
-    print(f"Median BMI: {median_bmi:.1f}\n")
+    print("Here are some descriptive statistics of the sampled data:")
+    print(f"Number of Entries: {count:.0f}")
+    print(f"Median Sampled Age: {median_age:.0f}")
+    print(f"Median Sampled Height: {median_height:.0f}")
+    print(f"Median Sampled Weight: {median_weight:.0f}")
+    print(f"Median Sampled BMI: {median_bmi:.1f}\n")
 
  
 
 def main():
     user_data = get_user_data()
-    user_bmi = calculate_bmi_and_update_sheet(user_data)
-    compare_with_median(user_bmi)
+    user_bmi, category = calculate_bmi_and_update_sheet(user_data)
+    compare_with_median(user_bmi, category)
     df = explore_data()
     print_descriptive_statistics(df)
  
