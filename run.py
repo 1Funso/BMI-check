@@ -197,11 +197,10 @@ def print_descriptive_statistics(df):
     print(f"Median Sampled BMI: {median_bmi:.1f}\n")
 
  
-
 def main():
+    print("Obesity Data Automation Program")
+    print("----------------------------------\n")
     print("""
-    Obesity Data Automation Program
-
     This program asks the user to input their age, gender, height, and weight.
     It then calculates the user's BMI, determines their weight category, and
     updates a Google Sheet with this information. Additionally, it allows the
@@ -215,6 +214,4 @@ def main():
     df = explore_data()
     print_descriptive_statistics(df)
  
-    
-    
 main()
