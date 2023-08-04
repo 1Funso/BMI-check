@@ -29,6 +29,7 @@ SHEET = GSPREAD_CLIENT.open('Obesity')
 # Open 'Obesity' worksheet
 obesity = SHEET.worksheet('Obesity')
 
+
 def get_user_data():
     """
     Get user data input from the terminal. The user is prompted to enter
@@ -51,6 +52,7 @@ def get_user_data():
             break
 
     return user_data
+
 
 def validate_input(data):
     """
@@ -77,6 +79,7 @@ def validate_input(data):
 
     return True
 
+
 def calculate_bmi_and_update_sheet(data):
     """
     Calculate BMI and update the Google Sheet with the new data. The function
@@ -89,10 +92,8 @@ def calculate_bmi_and_update_sheet(data):
     gender = data[1]
     height = float(data[2])
     weight = float(data[3])
-
     # Calculate BMI
     bmi = weight / ((height / 100) ** 2)
-          
     # Determine weight category
     if bmi < 18.5:
         category = 'Underweight'
@@ -102,56 +103,63 @@ def calculate_bmi_and_update_sheet(data):
         category = 'Overweight'
     else:
         category = 'Obese'
- 
-
     # Get the ID for the new row
     # Fetch all data from the worksheet
-    worksheet_data = obesity.get_all_values() 
+    worksheet_data = obesity.get_all_values()
     id = len(worksheet_data) + 1
 
     # Append to Google Sheet with all values as strings
     # Use format() to control number of decimal places
-    obesity.append_row([str(id), str(age), gender, format(height, '.0f'), format(weight, '.0f'), format(bmi, '.1f'), category])
+    data_to_append = [str(id), str(age), gender,
+                      format(height, '.0f'), format(weight, '.0f'),
+                      format(bmi, '.1f'), category]
+    obesity.append_row(data_to_append)
 
     return bmi, category
 
-    
+
 def compare_with_median(user_bmi, category):
     """
-    Compare the user's BMI with the median BMI in the Google Sheet. The function
-    retrieves the BMI data from the sheet, calculates the median BMI, and prints
-    a message indicating whether the user's BMI is below, above, or equal to the
-    median.
+    Compare the user's BMI with the median BMI in the Google Sheet.
+    The function retrieves the BMI data from the sheet, calculates the
+    median BMI, and prints a message indicating whether the user's BMI
+    is below, above, or equal to the median.
     """
     # Get the BMI data from the sheet
     data = obesity.get_all_values()
     df = pd.DataFrame(data[1:], columns=data[0])
     df['BMI'] = pd.to_numeric(df['BMI'], errors='coerce')
 
-    # Check if 'BMI' column is not empty and contains at least one non-NaN value
+    # Check if 'BMI' column is not empty and contains at least one non-NaN val
     if df['BMI'].count() > 0:
 
         # Calculate the median BMI
         median_bmi = df['BMI'].median()
 
         # Print the user's BMI and their category
-        print("******************************************************************************")
-        print(f"\nYour calculated BMI is {user_bmi:.1f}. You are categorized as {category}.\n")
-        print("*******************************************************************************")
-    
-       # Compare the user's BMI with the median and print a message
-        print("*******************************************************************************")
+        print("**************************************************************")
+        print(f"\nYour calculated BMI is {user_bmi:.1f}. "
+              f"You are categorized as {category}.\n")
+        print("*************************************************************")
+
+        # Compare the user's BMI with the median and print a message
+        print("************************************************************")
         if user_bmi > median_bmi:
-            print(f"\nYour BMI of {user_bmi:.1f} is above the median BMI of the sampled population.\n")
+            print(f"\nYour BMI of {user_bmi:.1f} is above the "
+                  f"median BMI of the sampled population.\n")
         elif user_bmi < median_bmi:
-            print(f"\nYour BMI of {user_bmi:.1f} is below the median BMI of the sampled population.\n")
+            print(f"\nYour BMI of {user_bmi:.1f} is below the "
+                  f"median BMI of the sampled population.\n")
         else:
-            print(f"\nYour BMI of {user_bmi:.1f} is equal to the median BMI of the sampled population.\n")
-        print("**********************************************************************************")
+            print(f"\nYour BMI of {user_bmi:.1f} is equal to the "
+                  f"median BMI of the sampled population.\n")
+        print("************************************************************")
     else:
-            print("**************************************************************")
-            print("Unable to calculate median BMI because there is no BMI data.\n")
-            print("**************************************************************")
+        print("**************************************************************")
+        print("Unable to calculate median BMI because "
+             "there is no BMI data.\n")
+        print("**************************************************************")
+
 
 def explore_data():
     """
@@ -171,6 +179,7 @@ def explore_data():
 
     return df
 
+
 def print_descriptive_statistics(df):
     """
     Print descriptive statistics of the Google Sheet data. The function
@@ -188,7 +197,6 @@ def print_descriptive_statistics(df):
     median_weight = df['Weight'].median()
     median_bmi = df['BMI'].median()
 
-    
     print("Here are some descriptive statistics of the sampled data:")
     print(f"Number of Entries: {count:.0f}")
     print(f"Median Sampled Age: {median_age:.0f}")
@@ -196,7 +204,7 @@ def print_descriptive_statistics(df):
     print(f"Median Sampled Weight: {median_weight:.0f}")
     print(f"Median Sampled BMI: {median_bmi:.1f}\n")
 
- 
+
 def main():
     print("""
 Obesity Data Automation Program
@@ -215,5 +223,6 @@ updates a Google Sheet with this information.
     compare_with_median(user_bmi, category)
     df = explore_data()
     print_descriptive_statistics(df)
- 
+
+
 main()
