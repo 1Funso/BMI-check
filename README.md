@@ -30,7 +30,7 @@ The Obesity Data Automation Program is designed to facilitate the collection and
 - Data collection: The program collects user data via the terminal.
 - Data analysis: The program calculates the user's BMI and categorizes their weight.
 - Data storage: The program updates a Google Sheet with the user's data.
-- Data exploration: The program allows the user to explore the data by printing descriptive statistics and filtering the data by gender, age, or weight category.
+- Data exploration: The program allows the user to explore the data by printing descriptive statistics.
 
 ## Testing <a name="testing"></a>
 
@@ -44,10 +44,7 @@ The program has been tested extensively both in a local terminal and in a Heroku
 2. **Bug:** The program did not handle missing input correctly.
     **Solution:** Added checks to ensure that all required data fields are provided by the user.
 
-3. **Bug:** The BMI calculation was not accurate for certain edge cases.
-    **Solution:** Adjusted the BMI calculation formula to handle these cases correctly.
-
-4. **Bug:** Error when trying to update the Google Sheet if the user does not have edit permissions.
+3. **Bug:** Error when trying to update the Google Sheet if the user does not have edit permissions.
     **Solution:** Added error handling to provide a meaningful error message to the user and continue with the program execution.
 
 ## Validator Testing <a name="validator"></a>
