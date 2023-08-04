@@ -1,13 +1,3 @@
-"""
-Obesity Data Automation Program
-
-This program asks the user to input their age, gender, height, and weight.
-It then calculates the user's BMI, determines their weight category, and
-updates a Google Sheet with this information. Additionally, it allows the
-user to explore the data by printing descriptive statistics and filtering
-the data by gender, age, or weight category.
-"""
-
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
