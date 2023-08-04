@@ -4,19 +4,11 @@ A program designed to collect, analyze, and visualize obesity data.
 
 ## GitHub Repository <a name="github"></a>
 
-You can find the GitHub repository by clicking [here](URL_TO_YOUR_REPOSITORY).
+You can find the GitHub repository by clicking [here](https://github.com/1Funso/BMI-check).
 
 ## Live Deployment <a name="live"></a>
 
-The live deployment of the project can be accessed by clicking [here](URL_TO_YOUR_LIVE_DEPLOYMENT).
-
-## Screenshots <a name="screenshots"></a>
-
-Desktop view:
-![Desktop view](path_to_your_desktop_screenshot)
-
-Mobile view:
-![Mobile view](path_to_your_mobile_screenshot)
+The live deployment of the project can be accessed by clicking [here](https://bmi-check-1-8c96fcfba012.herokuapp.com/).
 
 
 ## Table of Contents
@@ -28,9 +20,6 @@ Mobile view:
 - [Validator Testing](#validator)
 - [Deployment](#deployment)
 - [Credits](#credits)
-- [GitHub Repository](#github)
-- [Live Deployment](#live)
-- [Screenshots](#screenshots)
 
 ## Description <a name="description"></a>
 
@@ -63,7 +52,7 @@ The program has been tested extensively both in a local terminal and in a Heroku
 
 ## Validator Testing <a name="validator"></a>
 
-The Python code in the program has been checked using a PEP8 validator and it passed with no significant issues.
+The Python code in the program has been checked using the Code Institute PEP8 validator and it passed with no issues.
 
 ## Deployment <a name="deployment"></a>
 
@@ -78,5 +67,5 @@ The program has been deployed to Heroku. The deployment process is as follows:
 ## Credits <a name="credits"></a>
 
 - Code Institute for providing the deployment guide.
-- Kaggle for providing the initial obesity dataset. Credit to [Name of Depositor].
+- Kaggle for providing the initial obesity dataset. Credit to  [SUJITH K MANDALA - Obesity Classification Dataset].
 
