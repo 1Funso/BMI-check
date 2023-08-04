@@ -40,7 +40,7 @@ def get_user_data():
         print("Data should be four values, separated by commas.")
         print("Example: 25, Male, 180, 80\n")
 
-        data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here: \n")
 
         user_data = [item.strip() for item in data_str.split(",")]
 
@@ -143,9 +143,29 @@ def compare_with_median(user_bmi):
     else:
         print("Unable to calculate median BMI because there is no BMI data.")
 
+def explore_data():
+    """
+    Perform data exploration. The function retrieves the data from the Google
+    Sheet, calculates and prints descriptive statistics, and allows the user to
+    filter the data by gender, age, or weight category.
+    """
+    # Get the data from the sheet
+    data = obesity.get_all_values()
+    df = pd.DataFrame(data[1:], columns=data[0])
+
+    # Convert numerical columns to the proper data type
+    df['Age'] = df['Age'].astype(int)
+    df['Height'] = df['Height'].astype(float)
+    df['Weight'] = df['Weight'].astype(float)
+    df['BMI'] = df['BMI'].astype(float)
+
+    # Calculate and print descriptive statistics
+    print(df.describe())
+
 def main():
     user_data = get_user_data()
     user_bmi = calculate_bmi_and_update_sheet(user_data)
     compare_with_median(user_bmi)
+    explore_data()
 
 main()
