@@ -132,6 +132,9 @@ def compare_with_median(user_bmi):
 
         # Calculate the median BMI
         median_bmi = df['BMI'].median()
+
+        # Print the user's BMI
+        print(f"Your calculated BMI is {user_bmi:.1f}.\n")
     
         # Compare the user's BMI with the median and print a message
         if user_bmi > median_bmi:
