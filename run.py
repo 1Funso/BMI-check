@@ -199,6 +199,16 @@ def print_descriptive_statistics(df):
  
 
 def main():
+    print("""
+    Obesity Data Automation Program
+
+    This program asks the user to input their age, gender, height, and weight.
+    It then calculates the user's BMI, determines their weight category, and
+    updates a Google Sheet with this information. Additionally, it allows the
+    user to explore the data by printing descriptive statistics and filtering
+    the data by gender, age, or weight category.
+    """)
+
     user_data = get_user_data()
     user_bmi, category = calculate_bmi_and_update_sheet(user_data)
     compare_with_median(user_bmi, category)
